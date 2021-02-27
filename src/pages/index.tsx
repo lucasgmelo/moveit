@@ -1,53 +1,31 @@
-import { GetServerSideProps } from 'next';
-import Head from 'next/head';
-import CompletedChallenges from "../components/CompletedChallenges";
-import Countdown from "../components/Countdown";
-import ExperienceBar from "../components/ExperienceBar";
-import Profile from "../components/Profile";
-import styles from '../styles/pages/Home.module.css';
-import ChallengeBox from "../components/ChallengeBox";
-import { CountdownProvider } from "../contexts/CountdownContext";
-import { ChallengesProvider } from '../contexts/ChallengesContext';
+import { useRouter } from 'next/router';
+import React from 'react'
+import styles from '../styles/pages/Index.module.css';
 
-interface HomeProps {
-  level : number;
-  currentExperiente: number;
-  challengesCompleted: number;
-}
+export default function index() {
+  const router = useRouter();
 
-export default function Home(props: HomeProps) {
   return (
-    <ChallengesProvider level={props.level} currentExperiente={props.currentExperiente} challengesCompleted={props.challengesCompleted} >
-      <div className={styles.container}>
-        <Head>
-          <title>Início | move.it</title>
-        </Head>
-        <ExperienceBar />
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <Countdown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </div>
-    </ChallengesProvider>  )
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  
-  const { level, currentExperiente, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-    level: Number(level),
-    currentExperiente: Number(currentExperiente),
-    challengesCompleted: Number(challengesCompleted),
-    }
-  }
+    <div className={styles.container}>
+      <img src="icons/icon.svg" alt="Ícone"/>
+      <section>
+        <img src="my_logo.svg" alt="Logo"/>
+        <div className={styles.login}>
+          <h3>Bem-vindo</h3>
+          <div>
+            <img src="icons/Github.svg" alt="Github"/>
+            <p>Faça seu login com o Github para começar.</p>
+          </div>
+          <form className={styles.input} onSubmit={(event) => {
+            event.preventDefault();
+            router.push('/home');
+          }}>
+            <input type="text" placeholder="Digite seu username"/>
+            <button type="submit" >
+              <img src="icons/arrow_right.svg" alt="Continuar"/>
+            </button>
+          </form>
+        </div>
+      </section>
+    </div>  )
 }

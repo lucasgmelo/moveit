@@ -1,0 +1,96 @@
+.container {
+    height: 100vh;
+    padding: 80px 0;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+
+    background: var(--blue);
+
+}
+
+.container > img {
+    width: 90%;
+    height: 90%;
+}
+
+.container section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    height: 100%;
+}
+
+.container section > img {
+    width: 80%;
+}
+
+.login h3 {
+    font-size: 2.25rem;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+}
+
+.login > div {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 2.5rem;
+}
+
+.login > div > img {
+    margin-right: 1rem;
+}
+
+.login > div p {
+    color: #eee;
+    font-size: 1.25rem;
+    max-width: 280px;
+    font-weight: 400;
+    line-height: 1.75rem;
+}
+
+.input {
+    height: 80px;
+    display: flex;
+}
+
+.input input {
+    height: 100%;
+    width: 340px;
+    background: linear-gradient(90deg, #5D8368 0%, rgba(67, 88, 73, 0.2) 100%);
+    border-radius: 5px 0px 0px 5px;
+    border: 0;
+    padding: 0 1.25rem;
+
+    color: #fff;
+
+    outline: none;
+}
+
+.input input:active,
+.input input:focus {
+    border: 2px solid var(--blue-dark);
+}
+
+.input input::placeholder {
+    color: #fff;
+    font-family: 'Inter';
+    font-size: 1.15rem;
+}
+
+.input button {
+    height: 100%;
+    width: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #1E421E;
+    border-radius: 0px 5px 5px 0px;
+
+    border: 0;
+}
