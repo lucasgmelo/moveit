@@ -5,7 +5,7 @@ function Loader() {
     return (
         <div className={styles.LoaderContainer}>
             <img src="line_1.svg" />
-            <img src="line_2.svg" className={styles.mid} />
+            <img src="line_2.svg" />
             <img src="line_1.svg" />
         </div>
     )

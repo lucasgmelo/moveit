@@ -26,18 +26,26 @@ const SCREEN = {
   RANKING: 'ranking',
 }
 
+interface UserDataProps {
+  avatar_url: string;
+  login: string;
+}
+
 export default function Home(props: HomeProps) {
 
   const [screen, setScreen] = useState(SCREEN.LOADING);
-  const { user, userData, handleUser, handleUserData } = useContext(LoginContext);
+  const [userData, setUserData] = useState({} as UserDataProps);
   const router = useRouter();
+  const { user } = router.query;
 
   useEffect(() => {
     GetUser(user);
   }, []);
   
-  const GetUser = async (user: string) => {
+  const GetUser = async (user) => {
     const res = await axios.get(`https://api.github.com/users/${user}`);
+    setUserData(res.data.avatar_url);
+    // setScreen(SCREEN.HOME);
   }
 
   return (
@@ -56,7 +64,7 @@ export default function Home(props: HomeProps) {
         <CountdownProvider>
           <section>
             <div>
-              <Profile />
+              <Profile url={userData.avatar_url} name={userData.login}/>
               <CompletedChallenges />
               <Countdown />
             </div>
