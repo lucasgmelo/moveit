@@ -42,6 +42,7 @@ export default function Home(props: HomeProps) {
     .then((res) => {
       setPhoto(res.data.avatar_url);
       setName(res.data.login);
+      setScreen(SCREEN.HOME);
     })
     .catch((err) => {
       setScreen(SCREEN.ERROR);
@@ -50,15 +51,6 @@ export default function Home(props: HomeProps) {
   
   useEffect(() => {
     getUser(user);
-    if(screen !== SCREEN.ERROR) {
-      setTimeout(() => {
-        setScreen(SCREEN.HOME);
-      }, 1500)
-    } else {
-      setTimeout(() => {
-        setScreen(SCREEN.ERROR);
-      }, 1500)
-    }
   }, []);
   
 
