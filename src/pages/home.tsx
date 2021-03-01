@@ -20,51 +20,55 @@ interface HomeProps {
   challengesCompleted: number;
 }
 
-const SCREEN = {
-  LOADING: 'loading',
-  HOME: 'home',
-  RANKING: 'ranking',
-}
-
-interface UserDataProps {
-  avatar_url: string;
-  login: string;
-}
-
 export default function Home(props: HomeProps) {
 
-  const [screen, setScreen] = useState(SCREEN.LOADING);
-  const [userData, setUserData] = useState({} as UserDataProps);
+  const [name, setName] = useState('');
+  const [photo, setPhoto] = useState('');
+  const [screen, setScreen] = useState('loading');
   const router = useRouter();
   const { user } = router.query;
 
+  const getUser = async (user) => {
+    const res = await axios.get(`
+    https://api.github.com/users/${user}`);
+    setPhoto(res.data.avatar_url);
+    setName(res.data.login);
+  };
+  
   useEffect(() => {
-    GetUser(user);
+    getUser(user);
+    setTimeout(() => {
+      setScreen('home');
+    }, 1500)
   }, []);
   
-  const GetUser = async (user) => {
-    const res = await axios.get(`https://api.github.com/users/${user}`);
-    setUserData(res.data.avatar_url);
-    // setScreen(SCREEN.HOME);
-  }
 
   return (
     <ChallengesProvider level={props.level} currentExperiente={props.currentExperiente} challengesCompleted={props.challengesCompleted} >
 
-      {screen === SCREEN.LOADING && (
-        <Loader />
-      )}
-
-      {screen === SCREEN.HOME && (
-        <div className={styles.container}>
         <Head>
           <title>Início | se.apruma</title>
         </Head>
+
+      {screen === 'loading' && (
+        <Loader />
+      )}
+
+      {screen === 'ranking' && (
+        <h1>oi</h1>
+      )}
+
+      {screen === 'error' && (
+        <h1>erro</h1>
+      )}
+
+      {screen === 'home' && (
+        <div className={styles.container}>
         <ExperienceBar />
         <CountdownProvider>
           <section>
             <div>
-              <Profile url={userData.avatar_url} name={userData.login}/>
+              <Profile url={photo} username={name} />
               <CompletedChallenges />
               <Countdown />
             </div>
