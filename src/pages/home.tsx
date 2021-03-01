@@ -8,6 +8,11 @@ import styles from '../styles/pages/Home.module.css';
 import ChallengeBox from "../components/ChallengeBox";
 import { CountdownProvider } from "../contexts/CountdownContext";
 import { ChallengesProvider } from '../contexts/ChallengesContext';
+import React, { useContext, useEffect, useState } from 'react';
+import Loader from '../components/Loader';
+import axios from 'axios';
+import { LoginContext } from '../contexts/LoginContext';
+import { useRouter } from 'next/router';
 
 interface HomeProps {
   level : number;
@@ -15,10 +20,35 @@ interface HomeProps {
   challengesCompleted: number;
 }
 
+const SCREEN = {
+  LOADING: 'loading',
+  HOME: 'home',
+  RANKING: 'ranking',
+}
+
 export default function Home(props: HomeProps) {
+
+  const [screen, setScreen] = useState(SCREEN.LOADING);
+  const { user, userData, handleUser, handleUserData } = useContext(LoginContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    GetUser(user);
+  }, []);
+  
+  const GetUser = async (user: string) => {
+    const res = await axios.get(`https://api.github.com/users/${user}`);
+  }
+
   return (
     <ChallengesProvider level={props.level} currentExperiente={props.currentExperiente} challengesCompleted={props.challengesCompleted} >
-      <div className={styles.container}>
+
+      {screen === SCREEN.LOADING && (
+        <Loader />
+      )}
+
+      {screen === SCREEN.HOME && (
+        <div className={styles.container}>
         <Head>
           <title>Início | se.apruma</title>
         </Head>
@@ -32,10 +62,12 @@ export default function Home(props: HomeProps) {
             </div>
             <div>
               <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </div>
+             </div>
+            </section>
+          </CountdownProvider>
+        </div>
+      )}
+
     </ChallengesProvider>  )
 }
 

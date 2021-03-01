@@ -1,8 +1,10 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 interface LoginContextData {
-    login: string;
-    setLogin(value: string): void;
+    user: string;
+    userData: object;
+    handleUser: (params:string) => void;
+    handleUserData: (params:object) => void;
 }
 
 interface CountdownProviderProps {
@@ -11,14 +13,24 @@ interface CountdownProviderProps {
 
 export const LoginContext = createContext({} as LoginContextData);
 
-
 export function CountdownProvider({children}: CountdownProviderProps) {
-    const [login, setLogin] = useState(null);
+    const [user, setUser] = useState('lucasgmelo');
+    const [userData, setUserData] = useState({});
+
+    function handleUser (res: string) {
+        setUser(res);
+    }
+
+    function handleUserData (res: object) {
+        setUserData(res);
+    }
     
     return (
         <LoginContext.Provider value={{
-            login,
-            setLogin,
+            user,
+            userData,
+            handleUser,
+            handleUserData,
         }}>
             {children}
         </LoginContext.Provider>
