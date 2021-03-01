@@ -13,6 +13,7 @@ import Loader from '../components/Loader';
 import axios from 'axios';
 import { LoginContext } from '../contexts/LoginContext';
 import { useRouter } from 'next/router';
+import Error from '../components/Error';
 
 interface HomeProps {
   level : number;
@@ -20,26 +21,44 @@ interface HomeProps {
   challengesCompleted: number;
 }
 
+const SCREEN = {
+  HOME: 'home',
+  LOADING: 'loading',
+  ERROR: 'error',
+  RANKING: 'ranking',
+}
+
 export default function Home(props: HomeProps) {
 
   const [name, setName] = useState('');
   const [photo, setPhoto] = useState('');
-  const [screen, setScreen] = useState('loading');
+  const [screen, setScreen] = useState(SCREEN.LOADING);
   const router = useRouter();
   const { user } = router.query;
 
   const getUser = async (user) => {
     const res = await axios.get(`
-    https://api.github.com/users/${user}`);
-    setPhoto(res.data.avatar_url);
-    setName(res.data.login);
+    https://api.github.com/users/${user}`)
+    .then((res) => {
+      setPhoto(res.data.avatar_url);
+      setName(res.data.login);
+    })
+    .catch((err) => {
+      setScreen(SCREEN.ERROR);
+    })
   };
   
   useEffect(() => {
     getUser(user);
-    setTimeout(() => {
-      setScreen('home');
-    }, 1500)
+    if(screen !== SCREEN.ERROR) {
+      setTimeout(() => {
+        setScreen(SCREEN.HOME);
+      }, 1500)
+    } else {
+      setTimeout(() => {
+        setScreen(SCREEN.ERROR);
+      }, 1500)
+    }
   }, []);
   
 
@@ -50,19 +69,19 @@ export default function Home(props: HomeProps) {
           <title>Início | se.apruma</title>
         </Head>
 
-      {screen === 'loading' && (
+      {screen === SCREEN.LOADING && (
         <Loader />
       )}
 
-      {screen === 'ranking' && (
+      {screen === SCREEN.RANKING && (
         <h1>oi</h1>
       )}
 
-      {screen === 'error' && (
-        <h1>erro</h1>
+      {screen === SCREEN.ERROR && (
+        <Error />
       )}
 
-      {screen === 'home' && (
+      {screen === SCREEN.HOME && (
         <div className={styles.container}>
         <ExperienceBar />
         <CountdownProvider>

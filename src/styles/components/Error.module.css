@@ -1,0 +1,58 @@
+.ErrorContainer {
+    background: var(--blue);
+    
+    height: 100vh;
+    width: 100vw;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.5rem;
+    color: var(--title);
+    font-weight: 600;
+    letter-spacing: .5px;
+    line-height: 1.5;
+}
+
+.ErrorContainer > div {
+    padding: 1rem 2rem;
+    background: #F2F3F5;
+
+    min-height: 300px;
+    max-width: 700px;
+
+    border-radius: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    text-align: center;
+}
+
+.ErrorContainer > div > p {
+    margin: 4rem 0;
+}
+
+.ErrorContainer > div > button {
+    width: 100%;
+    height: 5rem;
+
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 5px;
+
+    background: var(--blue-dark);
+    color: var(--white);
+
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: .75px;
+}
