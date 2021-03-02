@@ -25,7 +25,7 @@ export default function index() {
             event.preventDefault();
             router.push(`/home?user=${name}`);
           }}>
-            <input type="text" placeholder="Digite seu username" onChange={(event) => {
+            <input required type="text" placeholder="Digite seu username" onChange={(event) => {
               setName(event.target.value);
             }}/>
             <button type="submit" >

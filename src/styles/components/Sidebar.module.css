@@ -1,0 +1,51 @@
+.SidebarContainer {
+    width: 100px;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #fff;
+}
+
+.SidebarContainer > a > img {
+    margin-top: 40px;
+}
+
+.Navigation {
+    list-style: none;
+    width: 100px;
+    position: relative;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Navigation li {
+    margin: 1rem 0;
+}
+
+.Navigation li:nth-child(1) {
+    cursor: pointer;
+}
+
+.Navigation li:nth-child(2) {
+    cursor: not-allowed;
+}
+
+.Navigation li span {
+    position: absolute;
+    top: 8px;
+    left: 0;
+
+    height: 50px;
+    width: 5px;
+    background: var(--blue);
+
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+
+}

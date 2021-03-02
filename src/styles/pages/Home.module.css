@@ -1,3 +1,8 @@
+.HomeContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 .container {
     height: 100vh;
     max-width: 992px;
